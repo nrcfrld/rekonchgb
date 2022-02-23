@@ -7,6 +7,10 @@
             <a href="{{ $data->href->export }}" class="ml-2 btn btn-success shadow-none">
                 <span class="fas fa-file-export"></span> {{ $data->href->export_text }}
             </a>
+
+            @if (isset($buttons))
+                {{ $buttons }}
+            @endif
         </div>
 
         <div class="row mb-4">

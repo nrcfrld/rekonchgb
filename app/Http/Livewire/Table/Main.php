@@ -14,7 +14,7 @@ class Main extends Component
     public $name;
 
     public $perPage = 10;
-    public $sortField = "id";
+    public $sortField = "created_at";
     public $sortAsc = false;
     public $search = '';
 

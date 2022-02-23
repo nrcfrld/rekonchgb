@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\RoleType;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -28,14 +29,14 @@ class CreateUser extends Component
         ], $rules);
     }
 
-    public function createUser ()
+    public function createUser()
     {
         $this->resetErrorBag();
         $this->validate();
 
         $password = $this->user['password'];
 
-        if ( !empty($password) ) {
+        if (!empty($password)) {
             $this->user['password'] = Hash::make($password);
         }
 
@@ -45,7 +46,7 @@ class CreateUser extends Component
         $this->reset('user');
     }
 
-    public function updateUser ()
+    public function updateUser()
     {
         $this->resetErrorBag();
         $this->validate();
@@ -60,7 +61,7 @@ class CreateUser extends Component
         $this->emit('saved');
     }
 
-    public function mount ()
+    public function mount()
     {
         if (!$this->user && $this->userId) {
             $this->user = User::find($this->userId);
@@ -71,6 +72,8 @@ class CreateUser extends Component
 
     public function render()
     {
-        return view('livewire.create-user');
+        return view('livewire.create-user', [
+            'role' => RoleType::getValues()
+        ]);
     }
 }

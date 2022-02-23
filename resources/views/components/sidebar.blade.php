@@ -9,13 +9,34 @@ $links = [
         "href" => [
             [
                 "section_text" => "User",
+                "section_logo" => "fas fa-users",
                 "section_list" => [
                     ["href" => "user", "text" => "Data User"],
                     ["href" => "user.new", "text" => "Buat User"]
-                ]
+                ],
+                "section_role" => [0]
+            ],
+            [
+                "section_text" => "Master Data",
+                "section_logo" => "fas fa-table",
+                "section_list" => [
+                    ["href" => "reason-code", "text" => "Reason Code"],
+                    ["href" => "level", "text" => "Level Chargeback"],
+                    ["href" => "principal", "text" => "Prinsipal"],
+                ],
+                "section_role" => [0, 1]
+            ],
+            [
+                "section_text" => "Chargeback",
+                "section_logo" => "fas fa-file-invoice",
+                "section_list" => [
+                    ["href" => "chargeback", "text" => "Data Chargeback"],
+                    ["href" => "chargeback.new", "text" => "Buat Data"],
+                ],
+                "section_role" => [0,1]
             ]
         ],
-        "text" => "User",
+        "text" => "Main Menu",
         "is_multi" => true,
     ],
 ];
@@ -29,7 +50,7 @@ $navigation_links = array_to_object($links);
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="{{ route('dashboard') }}">
-                <img class="d-inline-block" width="32px" height="30.61px" src="" alt="">
+                <i class="fas fa-store fa-2x"></i>
             </a>
         </div>
         @foreach ($navigation_links as $link)
@@ -48,15 +69,18 @@ $navigation_links = array_to_object($links);
 
                     $is_active = in_array(true, $routes);
                     @endphp
-
+                    @if (in_array(auth()->user()->role, $section->section_role))
                     <li class="dropdown {{ ($is_active) ? 'active' : '' }}">
-                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-chart-bar"></i> <span>{{ $section->section_text }}</span></a>
+                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                            <i class="{{ $section->section_logo }}"></i> <span>{{ $section->section_text }}</span>
+                        </a>
                         <ul class="dropdown-menu">
                             @foreach ($section->section_list as $child)
                                 <li class="{{ Request::routeIs($child->href) ? 'active' : '' }}"><a class="nav-link" href="{{ route($child->href) }}">{{ $child->text }}</a></li>
                             @endforeach
                         </ul>
                     </li>
+                    @endif
                 @endforeach
             @endif
         </ul>

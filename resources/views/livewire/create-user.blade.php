@@ -10,6 +10,17 @@
 
         <x-slot name="form">
             <div class="form-group col-span-6 sm:col-span-5">
+                <x-jet-label for="role" value="{{ __('Role') }}" />
+                <select id="role" type="text" class="mt-1 w-full form-control shadow-none" wire:model.defer="user.role">
+                    <option value="" selected>-- Pilih Role --</option>
+                    @foreach ($role as $r)
+                        <option value="{{ $r }}">{{ $r ? 'User' : 'Admin' }}</option>
+                    @endforeach
+                </select>
+                <x-jet-input-error for="user.role" class="mt-2" />
+            </div>
+
+            <div class="form-group col-span-6 sm:col-span-5">
                 <x-jet-label for="name" value="{{ __('Nama') }}" />
                 <small>Nama Lengkap Akun</small>
                 <x-jet-input id="name" type="text" class="mt-1 block w-full form-control shadow-none" wire:model.defer="user.name" />

@@ -10,5 +10,14 @@
 
     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
         <x-jet-welcome />
+        <div class="p-4">
+            {!! $chart->container() !!}
+        </div>
     </div>
+
+    <x-slot name="script">
+        <script src="{{ $chart->cdn() }}"></script>
+
+        {{ $chart->script() }}
+    </x-slot>
 </x-app-layout>
