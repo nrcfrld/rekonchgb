@@ -19,7 +19,7 @@ class CreateChargebacksTable extends Migration
             $table->string('arn');
             $table->string('card_number');
             $table->string('approval_code')->nullable()->default(000000);
-            $table->date('transaction_date');
+            $table->string('transaction_date');
             $table->date('opencase_date');
             $table->date('expired_date');
             $table->string('merchant')->nullable()->default('-');
