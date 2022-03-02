@@ -23,6 +23,10 @@ class ChargebackImport implements ToModel, WithChunkReading, WithHeadingRow
      */
     public function model(array $row)
     {
+        if (!is_int($row['transaction_date'])) {
+            throw new Exception("Tanggal $row[transaction_date] Bukan Tanggal Excel yang valid.", 401);
+        }
+
         $principal = Principal::where('name', 'like', $row['card_type'])->first();
 
         if (!$principal) {
