@@ -54,6 +54,7 @@ class ChargebackImport implements ToModel, WithChunkReading, WithHeadingRow
         $exist = Chargeback::where("ref_id", $row['ref_id'])->first();
         if ($exist) {
             $exist->update([
+                'amount' => $row['amount'],
                 'status' => $row['status'],
                 'level_id' => $level->id,
                 'reason_code_id' => $reasonCode->id
