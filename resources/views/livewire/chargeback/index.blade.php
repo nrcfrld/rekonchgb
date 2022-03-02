@@ -101,7 +101,7 @@
                     <td>{{ $chargeback->expired_date }}</td>
                     <td>{{ $chargeback->status }}</td>
                     <td class="whitespace-no-wrap row-action--icon">
-                        <a role="button" href="/chargeback/edit/{{ $chargeback->id }}" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
+                        <a role="button" href="{{ route('chargeback.edit', ['chargebackId' => $chargeback->id]) }}" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
                         <a role="button" x-on:click.prevent="deleteItem" href="#"><i class="fa fa-16px fa-trash text-red-500"></i></a>
                     </td>
                 </tr>

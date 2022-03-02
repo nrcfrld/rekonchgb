@@ -53,7 +53,7 @@
                     <td>{{ $reasonCode->name }}</td>
                     <td>{{ $reasonCode->created_at->format('d M Y H:i') }}</td>
                     <td class="whitespace-no-wrap row-action--icon">
-                        <a role="button" href="/reason-code/edit/{{ $reasonCode->id }}" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
+                        <a role="button" href="{{ route('reason-code.edit', ['reasonCodeId' => $reasonCode->id]) }}" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
                         <a role="button" x-on:click.prevent="deleteItem" href="#"><i class="fa fa-16px fa-trash text-red-500"></i></a>
                     </td>
                 </tr>

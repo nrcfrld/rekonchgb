@@ -19,13 +19,13 @@ class MonthlyIncomingChargeback
     public function build(): \ArielMejiaDev\LarapexCharts\BarChart
     {
 
-        // $chargebacks =  Chargeback::whereRaw('year(`opencase_date`)', date('Y'))->get()->groupBy(function ($item) {
-        //     return Carbon::parse($item->opencase_date)->format('Y-M');
-        // });
+        $chargebacks =  Chargeback::whereRaw('year(`opencase_date`)', date('Y'))->get()->groupBy(function ($item) {
+            return Carbon::parse($item->opencase_date)->format('M');
+        });
 
         // $chargebacks = DB::table('chargebacks')->select('opencase_date', DB::raw('count(*) as total'))->get();
 
-        // dd($chargebacks);
+        dd($chargebacks);
 
         return $this->chart->barChart()
             ->setTitle('Summary Win/Loss')
