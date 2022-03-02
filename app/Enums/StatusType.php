@@ -16,4 +16,5 @@ final class StatusType extends Enum
     const ClosedDebet =   "CLOSED / DEBET";
     const ClosedRepresentment =   "CLOSED / REPRESENTMENT";
     const ClosedLoss =   "CLOSED / LOSS";
+    const Closed =   "CLOSED";
 }
