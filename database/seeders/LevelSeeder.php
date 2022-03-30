@@ -16,22 +16,26 @@ class LevelSeeder extends Seeder
     {
         Level::create([
             'name' => 'RETRIEVAL REQUEST',
-            'descriptions' => '-'
+            'descriptions' => '-',
+            'level' => 1,
         ]);
 
         Level::create([
             'name' => 'CHARGEBACK',
-            'descriptions' => '-'
+            'descriptions' => '-',
+            'level' => 2
         ]);
 
         Level::create([
             'name' => 'SECOND CHARGEBACK',
-            'descriptions' => '-'
+            'descriptions' => '-',
+            'level' => 3
         ]);
 
         Level::create([
             'name' => 'ARBITRATION CHARGEBACK',
-            'descriptions' => '-'
+            'descriptions' => '-',
+            'level' => 4
         ]);
     }
 }

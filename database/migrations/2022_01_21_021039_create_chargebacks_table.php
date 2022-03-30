@@ -19,7 +19,7 @@ class CreateChargebacksTable extends Migration
             $table->string('arn');
             $table->string('card_number');
             $table->string('approval_code')->nullable()->default(000000);
-            $table->string('transaction_date');
+            $table->string('transaction_date')->nullable();
             $table->date('opencase_date');
             $table->date('expired_date');
             $table->string('merchant')->nullable()->default('-');
@@ -27,6 +27,8 @@ class CreateChargebacksTable extends Migration
             $table->string('tid')->nullable();
             $table->decimal('amount', 18, 2);
             $table->string('status');
+            $table->unsignedBigInteger('created_by_id')->nullable();
+            $table->unsignedBigInteger('updated_by_id')->nullable();
 
             $table->unsignedBigInteger('principal_id');
             $table->unsignedBigInteger('reason_code_id');

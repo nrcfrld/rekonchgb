@@ -14,7 +14,7 @@
                 <select id="role" type="text" class="mt-1 w-full form-control shadow-none" wire:model.defer="user.role">
                     <option value="" selected>-- Pilih Role --</option>
                     @foreach ($role as $r)
-                        <option value="{{ $r }}">{{ $r ? 'User' : 'Admin' }}</option>
+                        <option value="{{ $r }}" {{ $user && $user->role == 'Admin' && $r == 0 ? 'selected' : ''  }} {{ $user && $user->role == 'User' && $r == 1 ? 'selected' : ''  }}>{{ $r ? 'User' : 'Admin' }}</option>
                     @endforeach
                 </select>
                 <x-jet-input-error for="user.role" class="mt-2" />

@@ -31,13 +31,14 @@ class CreateChargeback extends Component
             'chargeback.status' => 'required',
             'chargeback.opencase_date' => 'required',
             'chargeback.expired_date' => 'required',
-            'chargeback.transaction_date' => 'required',
+            'chargeback.transaction_date' => 'nullable',
             'chargeback.principal_id' => 'required',
             'chargeback.level_id' => 'required',
             'chargeback.reason_code_id' => 'required',
             'chargeback.merchant' => 'required',
             'chargeback.mid' => 'required',
             'chargeback.tid' => 'required',
+            'chargeback.date_on_book' => 'nullable',
         ], $rules);
     }
 

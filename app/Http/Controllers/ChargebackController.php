@@ -28,7 +28,7 @@ class ChargebackController extends Controller
 
     public function export(Request $request)
     {
-        return (new ChargebackExport())->download('chargeback.xlsx');
+        return (new ChargebackExport($request))->download('chargeback.xlsx');
     }
 
     public function import(Request $request)
@@ -46,8 +46,19 @@ class ChargebackController extends Controller
                 'msg' => 'Gagal Import'
             ]);
         } catch (Exception $error) {
+            if (property_exists($error, 'status') && $error->status == 422) {
+                $failures = $error->failures();
+
+                foreach ($failures as $failure) {
+                    // dd($failure->values());
+                    return redirect()->back()->withErrors([
+                        'msg' => "Periksa Baris " . $failure->row() . ", " . $failure->errors()[0],
+                    ]);
+                }
+            }
+            // dd($error);
             return redirect()->back()->withErrors([
-                'msg' => $error->getMessage() . ", Harap Periksa Format Excel.",
+                'msg' => $error->getMessage() . ", Harap Periksa Format Excel, pastikan data tidak difilter dan hanya ada satu sheet.",
             ]);
         }
     }

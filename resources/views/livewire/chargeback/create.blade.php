@@ -7,7 +7,7 @@
 
                         <div class="form-group col-span-6">
                             <x-jet-label for="ref_id" value="{{ __('Ref Id') }}" />
-                            <small>Id referensi unik (ex: Id Ticket/DCN/Id Vrol)</small>
+                            <small>Id referensi unik untuk tiap case (ex: ARN/Ref Number)</small>
                             <x-jet-input id="ref_id" type="text" class="mt-1 block w-full form-control shadow-none" wire:model.defer="chargeback.ref_id" />
                             <x-jet-input-error for="chargeback.ref_id" class="mt-2" />
                         </div>
@@ -78,7 +78,7 @@
 
                         <div class="form-group col-span-6">
                             <x-jet-label for="transaction_date" value="{{ __('Tanggal Transaksi') }}" />
-                            <x-jet-input id="transaction_date" type="date" class="mt-1 block w-full form-control shadow-none" wire:model.defer="chargeback.transaction_date" />
+                            <x-jet-input id="transaction_date" type="text" class="mt-1 block w-full form-control shadow-none" wire:model.defer="chargeback.transaction_date" />
                             <x-jet-input-error for="chargeback.transaction_date" class="mt-2" />
                         </div>
 
@@ -116,6 +116,12 @@
                                 @endforeach
                             </select>
                             <x-jet-input-error for="chargeback.status" class="mt-2" />
+                        </div>
+
+                        <div class="form-group col-span-6">
+                            <x-jet-label for="date_on_book" value="{{ __('Tanggal Buku') }}" />
+                            <x-jet-input id="date_on_book" type="date" class="mt-1 block w-full form-control shadow-none" wire:model.defer="chargeback.date_on_book" />
+                            <x-jet-input-error for="chargeback.date_on_book" class="mt-2" />
                         </div>
                     </div>
                 </div>

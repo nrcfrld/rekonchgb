@@ -19,12 +19,54 @@ class ChargebackExport extends DefaultValueBinder implements FromQuery, WithHead
 {
     use Exportable;
 
+    protected $params;
+
+    function __construct($params)
+    {
+        $this->params = $params;
+    }
+
+
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function query()
     {
-        return Chargeback::query();
+        $chargeback = Chargeback::query();
+
+        if ($this->params->principal_id) {
+            $chargeback = $chargeback->where('principal_id', $this->params->principal_id);
+        }
+
+        if ($this->params->ref_id) {
+            $chargeback = $chargeback->where('ref_id', $this->params->ref_id);
+        }
+
+        if ($this->params->card_number) {
+            $chargeback = $chargeback->where('card_number', $this->params->card_number);
+        }
+
+        if ($this->params->arn) {
+            $chargeback = $chargeback->where('arn', $this->params->arn);
+        }
+
+        if ($this->params->level_id) {
+            $chargeback = $chargeback->where('level_id', $this->params->level_id);
+        }
+
+        if ($this->params->status) {
+            $chargeback = $chargeback->where('status', $this->params->status);
+        }
+
+        if ($this->params->start_date) {
+            $chargeback = $chargeback->whereDate('opencase_date', '>=', $this->params->start_date);
+        }
+
+        if ($this->params->end_date) {
+            $chargeback = $chargeback->whereDate('opencase_date', '<=', $this->params->end_date);
+        }
+
+        return $chargeback;
     }
 
     public function headings(): array
@@ -46,6 +88,7 @@ class ChargebackExport extends DefaultValueBinder implements FromQuery, WithHead
             'MID',
             'TID',
             'Status',
+            'Tanggal Buku',
         ];
     }
 
@@ -64,8 +107,8 @@ class ChargebackExport extends DefaultValueBinder implements FromQuery, WithHead
             $chargeback->amount,
             $chargeback->opencase_date,
             $chargeback->expired_date,
-            $chargeback->merchant,
-            $chargeback->mid,
+            $this->clean($chargeback->merchant),
+            $this->clean($chargeback->mid),
             $chargeback->tid,
             $chargeback->status,
         ];
@@ -89,5 +132,12 @@ class ChargebackExport extends DefaultValueBinder implements FromQuery, WithHead
 
         // else return default behavior
         return parent::bindValue($cell, $value);
+    }
+
+    protected function clean($string)
+    {
+        $string = str_replace('=', '', $string); // Replaces all spaces with hyphens.
+
+        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
     }
 }

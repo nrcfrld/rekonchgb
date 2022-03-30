@@ -20,7 +20,7 @@
             <form action="{{ route('reason-code.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">Import Data Chargeback</h5>
+                    <h5 class="modal-title">Import Data Reason Code</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>

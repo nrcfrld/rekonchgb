@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLevelsTable extends Migration
+class AddDateOnBookInChargebacks extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateLevelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('levels', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('descriptions');
-            $table->integer('level');
-            $table->timestamps();
+        Schema::table('chargebacks', function (Blueprint $table) {
+            $table->date('date_on_book')->nullable();
         });
     }
 
@@ -29,6 +25,8 @@ class CreateLevelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('levels');
+        Schema::table('chargebacks', function (Blueprint $table) {
+            $table->dropColumn('date_on_book');
+        });
     }
 }

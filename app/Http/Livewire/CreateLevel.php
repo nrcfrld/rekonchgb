@@ -16,11 +16,12 @@ class CreateLevel extends Component
     {
         return [
             'level.name' => 'required|min:3',
+            'level.level' => 'required|numeric',
             'level.descriptions' => 'required'
         ];
     }
 
-    public function createLevel ()
+    public function createLevel()
     {
         $this->resetErrorBag();
         $this->validate();
@@ -31,7 +32,7 @@ class CreateLevel extends Component
         $this->reset('level');
     }
 
-    public function updateLevel ()
+    public function updateLevel()
     {
         $this->resetErrorBag();
         $this->validate();
@@ -46,7 +47,7 @@ class CreateLevel extends Component
         $this->emit('saved');
     }
 
-    public function mount ()
+    public function mount()
     {
         if (!$this->level && $this->levelId) {
             $this->level = Level::find($this->levelId);

@@ -16,6 +16,12 @@
             </div>
 
             <div class="form-group col-span-6 sm:col-span-5">
+                <x-jet-label for="level" value="{{ __('Level') }}" />
+                <x-jet-input id="level" type="number" class="mt-1 block w-full form-control shadow-none" wire:model.defer="level.level" />
+                <x-jet-input-error for="level.level" class="mt-2" />
+            </div>
+
+            <div class="form-group col-span-6 sm:col-span-5">
                 <x-jet-label for="descriptions" value="{{ __('Deskripsi') }}" />
                 <x-jet-input id="descriptions" type="text" class="mt-1 block w-full form-control shadow-none" wire:model.defer="level.descriptions" />
                 <x-jet-input-error for="level.descriptions" class="mt-2" />

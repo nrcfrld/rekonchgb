@@ -10,6 +10,10 @@
                     Name
                     @include('components.sort-icon', ['field' => 'name'])
                 </a></th>
+                <th><a wire:click.prevent="sortBy('level')" role="button" href="#">
+                    Level
+                    @include('components.sort-icon', ['field' => 'name'])
+                </a></th>
                 <th><a wire:click.prevent="sortBy('created_at')" role="button" href="#">
                     Tanggal Dibuat
                     @include('components.sort-icon', ['field' => 'created_at'])
@@ -22,6 +26,7 @@
                 <tr x-data="window.__controller.dataTableController({{ $level->id }})">
                     <td>{{ $level->id }}</td>
                     <td>{{ $level->name }}</td>
+                    <td>{{ $level->level }}</td>
                     <td>{{ $level->created_at->format('d M Y H:i') }}</td>
                     <td class="whitespace-no-wrap row-action--icon">
                         <a role="button" href="{{ route('level.edit', ['levelId' => $level->id]) }}" class="mr-3"><i class="fa fa-16px fa-pen"></i></a>
@@ -31,7 +36,7 @@
 
                 @empty
                 <tr>
-                    <td colspan="4">Belum ada data</td>
+                    <td colspan="5">Belum ada data</td>
                 </tr>
 
             @endforelse

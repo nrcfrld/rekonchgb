@@ -5,6 +5,7 @@ namespace App\Charts;
 use App\Models\Chargeback;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MonthlyIncomingChargeback
@@ -16,22 +17,30 @@ class MonthlyIncomingChargeback
         $this->chart = $chart;
     }
 
-    public function build(): \ArielMejiaDev\LarapexCharts\BarChart
+    public function build(): \ArielMejiaDev\LarapexCharts\AreaChart
     {
+        $monthLoss =  Chargeback::whereYear('date_on_book', request()->get('year') ? request()->get('year') : date('Y'))->where('status', 'CLOSED / LOSS')->select(DB::raw('SUM(amount) as total_amount, MONTH(date_on_book) as month'))
+            ->groupBy(DB::raw('MONTH(date_on_book) ASC'))->get();
 
-        $chargebacks =  Chargeback::whereRaw('year(`opencase_date`)', date('Y'))->get()->groupBy(function ($item) {
-            return Carbon::parse($item->opencase_date)->format('M');
-        });
+        $monthWins =  Chargeback::whereYear('opencase_date', date('Y'))->whereIn('status', ['CLOSED / DEBET', 'CLOSED / REPRESENTMENT', 'CLOSED'])->select(DB::raw('SUM(amount) as total_amount, MONTH(opencase_date) as month, COUNT(id) as count'))
+            ->groupBy(DB::raw('MONTH(opencase_date) ASC'))->get();
 
-        // $chargebacks = DB::table('chargebacks')->select('opencase_date', DB::raw('count(*) as total'))->get();
+        $win = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        $loss = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-        dd($chargebacks);
+        foreach ($monthLoss as $month) {
+            $loss[$month->month - 1] = $month->total_amount;
+        }
 
-        return $this->chart->barChart()
+        foreach ($monthWins as $month) {
+            $win[$month->month - 1] = $month->total_amount;
+        }
+
+        return $this->chart->AreaChart()
             ->setTitle('Summary Win/Loss')
             ->setSubtitle('Diagram Win/Loss Chargeback')
-            ->addData('Win', [40, 93, 35, 42, 18, 82, 20, 10, 15, 30, 36])
-            ->addData('Loss', [70, 29, 77, 28, 55, 45, 10, 20, 18, 50, 70])
+            ->addData('Win', $win)
+            ->addData('Loss', $loss)
             ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Agustus', 'September', 'Oktober', 'November', 'Desember']);
     }
 }

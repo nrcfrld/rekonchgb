@@ -26,7 +26,7 @@
                         <select name="principal_id" id="principal_id" class="form-select w-full">
                             <option value="">-- Principal --</option>
                             @foreach ($principals as $principal)
-                                <option value="{{ $principal->id }}">{{ $principal->name }}</option>
+                                <option value="{{ $principal->id }}" {{ Request::get('principal_id') == $principal->id ? 'selected': '' }}>{{ $principal->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -55,8 +55,10 @@
                         </select>
                     </div>
                     <div class="col-span-4">
-                        <a href="javascript:;" class="btn btn-primary daterange-btn icon-left btn-icon"><i class="fas fa-calendar"></i> Choose Date
-                        </a>
+                       <input type="date" name="start_date" class="form-control">
+                    </div>
+                    <div class="col-span-4">
+                       <input type="date" name="end_date" class="form-control">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-outline-primary mt-3">
@@ -65,7 +67,7 @@
                 </button>
             </form>
         </div>
-        <livewire:table.main name="chargeback" :model="$chargeback" />
+        <livewire:table.chargeback-table name="chargeback" :model="$chargeback" />
     </div>
 
     @push('scripts')
